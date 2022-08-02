@@ -1,53 +1,67 @@
-import {Dimensions, Text, ScrollView, StyleSheet, View} from 'react-native';
+import * as React from 'react';
+import MapView, { Circle, Marker } from 'react-native-maps';
+import { StyleSheet, Text, View, Dimensions } from 'react-native';
 
-import React, { useEffect, useState } from 'react';
-import Geolocation from '@react-native-community/geolocation';
-
-//getting height and width of the device
-
-const {width, height} = Dimensions.get('window');
-
-const MapScreen = () => {
-  const [pos, setPos] = useState({})
-
-  useEffect(()=>{
-      Geolocation.getCurrentPosition(
-        position => {
-          setPos({... pos, latitude: position.coords.latitude, longtude: position.coords.longitude})
-          console.log('position', position)
-        },
-        error => {
-          console.log('error', error)
-        },
-        {
-          enableHighAccuracy: true
-        }
-      )
-  },[])
-
-
+export default function App() {
   return (
+    <View style={styles.container}>
+      <MapView style={styles.map} 
+         initialRegion={{
+          latitude: 7.318237,
+          longitude: 80.626133,
+          latitudeDelta: 0.0005,
+          longitudeDelta: 0.0005,
+        }}
+      >
+        <Marker
+        coordinate={{latitude: 7.318237, longitude: 80.626133}}
+        title="Coordinate 01"
+        pinColor='red'
+        ></Marker>
+        {/* <Circle center={{latitude: 7.318237, longitude: 80.626133}}
+        radius={100}
+        ></Circle> */}
+    
+        <Marker
+        coordinate={{latitude: 7.317180, longitude: 80.626346}}
+        title="Coordinate 02"
+        pinColor='red'
+        ></Marker>
+        {/* <Circle center={{latitude: 7.317335, longitude: 80.626346}}
+        radius={100}
+        ></Circle> */}
 
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={styles.root}>
+        <Marker
+        coordinate={{latitude: 7.317503, longitude: 80.626910}}
+        title="Coordinate 03"
+        pinColor='red'
+        ></Marker>
+        {/* <Circle center={{latitude: 7.317503, longitude: 80.626910}}
+        radius={100}
+        ></Circle> */}
 
-      
-      </View>
-    </ScrollView>
-
+<Marker
+        coordinate={{latitude: 7.317400, longitude: 80.626200}}
+        title="Sound Source"
+        pinColor='blue'
+        ></Marker>
+        {/* <Circle center={{latitude: 7.317335, longitude: 80.626346}}
+        radius={100}
+        ></Circle> */}
+      </MapView>
+    </View>
   );
-
-};
+}
 
 const styles = StyleSheet.create({
-
-  //Stylese for the main Screen.
-
-  root: {
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
     alignItems: 'center',
-    padding: 20,
+    justifyContent: 'center',
   },
-
+  map: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+  },
 });
-
-export default MapScreen;
